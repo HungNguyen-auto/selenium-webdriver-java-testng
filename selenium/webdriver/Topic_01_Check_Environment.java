@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class Topic_01_Check_Environment {
-	WebDriver driver; //library , component cua selenium
+	WebDriver driver; //library , component cua selenium 
 
 	@BeforeClass
 	public void beforeClass() {
