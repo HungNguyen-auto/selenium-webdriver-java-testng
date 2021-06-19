@@ -4,7 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+//import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -19,8 +20,8 @@ public class Topic_01_Check_Environment {
 		//System.setProperty("webdriver.firefox.driver", ".\\browserDrivers\\geckodriver.exe"); //driver cua trinh duyet, executeable file, cau noi giua selenium webdriver va browser
 		//driver = new FirefoxDriver();
 		
-		System.setProperty("webdriver.chrome.driver", ".\\browserDrivers\\chromedriver.exe");
-		driver = new ChromeDriver();
+		System.setProperty("webdriver.edge.driver", ".\\browserDrivers\\msedgedriver.exe");
+		driver = new EdgeDriver();
 		
 		
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
