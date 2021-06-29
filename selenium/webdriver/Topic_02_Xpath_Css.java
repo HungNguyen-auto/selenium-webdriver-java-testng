@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 //import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -17,21 +18,18 @@ public class Topic_02_Xpath_Css {
 
 	@BeforeClass
 	public void beforeClass() {
-		//System.setProperty("webdriver.firefox.driver", ".\\browserDrivers\\geckodriver.exe"); //driver cua trinh duyet, executeable file, cau noi giua selenium webdriver va browser
-		//driver = new FirefoxDriver();
-		
-		System.setProperty("webdriver.edge.driver", ".\\browserDrivers\\msedgedriver.exe");
-		driver = new EdgeDriver();
-		
-		
+		driver = new FirefoxDriver();
+		//thời gian chờ cho element được tìm thấy trong 1 khoảng time
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
-		driver.get("");
+		//mở website
+		driver.get("https://www.nopcommerce.com/en/register?returnUrl=%2Fen%2Fdemo");
 	}
 
 	@Test
 	public void TC_01() {
-	
+		//nhập giá trị vào username textbox
+		//driver.findElement(By.)
 	}
 
 	@Test
