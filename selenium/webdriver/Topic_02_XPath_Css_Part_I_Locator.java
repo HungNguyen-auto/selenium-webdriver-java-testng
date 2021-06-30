@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-public class Topic_03_Selenium_Locator {
+public class Topic_02_XPath_Css_Part_I_Locator {
 	WebDriver driver;
 
 	@BeforeClass

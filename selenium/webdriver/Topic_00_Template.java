@@ -14,15 +14,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class Topic_00_Template {
-	WebDriver driver; //library , component cua selenium    
+	WebDriver driver; // library , component cua selenium
 
 	@BeforeClass
 	public void beforeClass() {
-		//System.setProperty("webdriver.firefox.driver", ".\\browserDrivers\\geckodriver.exe"); //driver cua trinh duyet, executeable file, cau noi giua selenium webdriver va browser
-		//driver = new FirefoxDriver();
-		
+		// System.setProperty("webdriver.firefox.driver",
+		// ".\\browserDrivers\\geckodriver.exe"); //driver cua trinh duyet, executeable
+		// file, cau noi giua selenium webdriver va browser
+		// driver = new FirefoxDriver();
+
 		driver = new FirefoxDriver();
-		
+
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.get("");
@@ -30,7 +32,7 @@ public class Topic_00_Template {
 
 	@Test
 	public void TC_01_ID() {
-	
+
 	}
 
 	@Test
@@ -48,4 +50,12 @@ public class Topic_00_Template {
 		driver.quit();
 	}
 
+	public void sleepInSecond(long timeoutInSecond) {
+		try {
+			Thread.sleep(timeoutInSecond * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
