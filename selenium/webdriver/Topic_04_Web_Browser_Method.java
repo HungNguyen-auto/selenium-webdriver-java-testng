@@ -4,13 +4,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-//import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class Topic_04_Web_Browser_Method {
@@ -18,40 +16,79 @@ public class Topic_04_Web_Browser_Method {
 
 	@BeforeClass
 	public void beforeClass() {
-		// System.setProperty("webdriver.firefox.driver",
-		// ".\\browserDrivers\\geckodriver.exe"); //driver cua trinh duyet, executeable
-		// file, cau noi giua selenium webdriver va browser
-		// driver = new FirefoxDriver();
-
-		driver = new FirefoxDriver();
-
-		// chờ cho element được tìm thấy trong xx thời gian
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		
-		//back về page trước đó
+		System.setProperty("webdriver.chrome.driver", ".\\browserDrivers\\chromedriver.exe");
+		driver = new ChromeDriver();
+		sleepInSecond(5);
+		driver.manage().window().maximize();
+		
+	}
+
+	@BeforeMethod
+	public void beforeMethod() {
+		driver.get("http://live.demoguru99.com/");
+	}
+	@Test
+	public void TC_01_Verify_URL() {
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/login/");
+		
+		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/create/");
+		
+	}
+
+	@Test
+	public void TC_02_Verify_Page_Title() {
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+
+		Assert.assertEquals(driver.getTitle(), "Customer Login");
+		
+		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+
+		Assert.assertEquals(driver.getTitle(), "Create New Customer Account");
+		
+	}
+
+	@Test
+	public void TC_03_Navigate() {
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		
+		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+		
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/create/");
+		
 		driver.navigate().back();
 		
-		driver.quit();
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/login/");
 		
-		driver.close();
+		driver.navigate().forward();
 		
-		driver.switchTo().alert();
+		Assert.assertEquals(driver.getTitle(), "Create New Customer Account");
 		
 	}
-
 	@Test
-	public void TC_01_ID() {
-
-	}
-
-	@Test
-	public void TC_02() {
-
-	}
-
-	@Test
-	public void TC_03() {
-
+	public void TC_04_Page_Source() {
+		
+		String pageSource;
+		
+		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		
+		pageSource = driver.getPageSource();
+		
+		Assert.assertTrue(pageSource.contains("Login or Create an Account"));
+		
+		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+		
+		pageSource = driver.getPageSource();
+		
+		Assert.assertTrue(pageSource.contains("Create an Account"));
+	
 	}
 
 	@AfterClass
