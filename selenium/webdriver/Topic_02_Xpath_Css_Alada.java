@@ -54,7 +54,7 @@ public class Topic_02_Xpath_Css_Alada {
 
 		driver.findElement(registerButtonBy).click();
 
-		Assert.assertEquals(driver.findElement(errnameTextboxBy).getText(), "Vui lòng nhập họ tên");
+		Assert.assertEquals(driver.findElement(errnameTextboxBy).getText(), "Vui lòng nhập họ tên11");
 
 		Assert.assertEquals(driver.findElement(erremailTextboxBy).getText(), "Vui lòng nhập email");
 

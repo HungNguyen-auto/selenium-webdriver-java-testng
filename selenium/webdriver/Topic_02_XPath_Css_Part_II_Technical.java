@@ -1,5 +1,6 @@
 package webdriver;
 
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -12,20 +13,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class Topic_02_XPath_Css_Part_II_Technical {
-	
+
 	WebDriver driver; // library , component cua selenium
 
 	String fname = "henry";
 
 	String lname = "nguyen";
 
+	String fullName = fname + " " + lname;
+
 	String pass = "1234aa";
 
-	String uuid = UUID.randomUUID().toString().substring(0, 5);
+	String email = "henrynguyen" + generateEmail();
 
 	@BeforeClass
 	public void beforeClass() {
-		
+
 		System.setProperty("webdriver.chrome.driver", ".\\browserDrivers\\chromedriver.exe");
 		driver = new ChromeDriver();
 		sleepInSecond(5);
@@ -111,7 +114,7 @@ public class Topic_02_XPath_Css_Part_II_Technical {
 
 		driver.findElement(By.id("lastname")).sendKeys(lname);
 
-		driver.findElement(By.id("email_address")).sendKeys(uuid + "@gmail.com");
+		driver.findElement(By.id("email_address")).sendKeys(email);
 
 		driver.findElement(By.id("password")).sendKeys(pass);
 
@@ -124,23 +127,33 @@ public class Topic_02_XPath_Css_Part_II_Technical {
 		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='success-msg']//span")).getText(),
 				"Thank you for registering with Main Website Store.");
 
-		Assert.assertTrue(
-				driver.findElement(By.xpath("//p[contains(text(),'" + fname + "') and not(@class='welcome-msg')]"))
-						.isDisplayed());
+		Assert.assertTrue(driver.findElement(
+				By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p[contains(string(),'"
+						+ fullName + "')]"))
+				.isDisplayed());
 
-		Assert.assertTrue(
-				driver.findElement(By.xpath("//p[contains(text(),'" + lname + "') and not(@class='welcome-msg')]"))
-						.isDisplayed());
+		Assert.assertTrue(driver.findElement(
+				By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p[contains(string(),'"
+						+ email + "')]"))
+				.isDisplayed());
 
-		Assert.assertTrue(driver.findElement(By.xpath("//p[contains(string(),'" + uuid + "')]")).isDisplayed());
+		// d�ng h�m getText v� verify contains
+		String contactInformation = driver
+				.findElement(By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p"))
+				.getText();
+
+		System.out.println(contactInformation);
+
+		Assert.assertTrue(contactInformation.contains(fullName));
+		Assert.assertTrue(contactInformation.contains(email));
 
 		sleepInSecond(5);
 
-		driver.findElement(By.xpath("//div[@class='skip-links']//span[text()='Account']")).click();
+		driver.findElement(By.cssSelector(".skip-account")).click();
 
 		driver.findElement(By.xpath("//a[@title='Log Out']")).click();
 
-		sleepInSecond(10);
+		sleepInSecond(5);
 
 		Assert.assertEquals(driver.getTitle(), "Home page");
 	}
@@ -150,7 +163,7 @@ public class Topic_02_XPath_Css_Part_II_Technical {
 
 		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
 
-		driver.findElement(By.id("email")).sendKeys(uuid + "@gmail.com");
+		driver.findElement(By.id("email")).sendKeys(email);
 
 		driver.findElement(By.id("pass")).sendKeys(pass);
 
@@ -160,21 +173,36 @@ public class Topic_02_XPath_Css_Part_II_Technical {
 
 		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='page-title']/h1")).getText(), "MY DASHBOARD");
 
-		Assert.assertTrue(
-				driver.findElement(By.xpath("//p[contains(text(),'" + fname + "') and not(@class='welcome-msg')]"))
-						.isDisplayed());
+		Assert.assertTrue(driver.findElement(
+				By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p[contains(string(),'"
+						+ fullName + "')]"))
+				.isDisplayed());
 
-		Assert.assertTrue(
-				driver.findElement(By.xpath("//p[contains(text(),'" + lname + "') and not(@class='welcome-msg')]"))
-						.isDisplayed());
+		Assert.assertTrue(driver.findElement(
+				By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p[contains(string(),'"
+						+ email + "')]"))
+				.isDisplayed());
 
-		Assert.assertTrue(driver.findElement(By.xpath("//p[contains(.,'" + uuid + "')]")).isDisplayed());
+		// d�ng h�m getText v� verify contains
+		String contactInformation = driver
+				.findElement(By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p"))
+				.getText();
+
+		System.out.println(contactInformation);
+
+		Assert.assertTrue(contactInformation.contains(fullName));
+		Assert.assertTrue(contactInformation.contains(email));
 
 	}
 
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
+	}
+
+	public String generateEmail() {
+		Random rand = new Random();
+		return rand.nextInt(9999) + "@gmail.com";
 	}
 
 	public void sleepInSecond(long timeoutInSecond) {
