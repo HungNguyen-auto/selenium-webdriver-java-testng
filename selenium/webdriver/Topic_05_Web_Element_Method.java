@@ -3,6 +3,7 @@ package webdriver;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -15,6 +16,7 @@ import org.testng.annotations.Test;
 
 public class Topic_05_Web_Element_Method {
 	WebDriver driver; // library , component cua selenium
+	JavascriptExecutor jsExcutor;
 
 	By emailTextbox = By.id("mail");
 	By educationTextArea = By.id("edu");
@@ -32,15 +34,15 @@ public class Topic_05_Web_Element_Method {
 
 		System.setProperty("webdriver.chrome.driver", ".\\browserDrivers\\chromedriver.exe");
 		driver = new ChromeDriver();
-		
-		//driver = new FirefoxDriver();
+		jsExcutor = (JavascriptExecutor) driver;
+		// driver = new FirefoxDriver();
 
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 
 	}
 
-	//@Test
+	// @Test
 	public void TC_01_Displayed_Newbie() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		if (driver.findElement(By.id("mail")).isDisplayed()) {
@@ -68,7 +70,7 @@ public class Topic_05_Web_Element_Method {
 		}
 	}
 
-	//@Test
+	// @Test
 	public void TC_01_Displayed_Function() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 
@@ -86,7 +88,7 @@ public class Topic_05_Web_Element_Method {
 
 	}
 
-	//@Test
+	// @Test
 	public void TC_02_Selected_Function() {
 
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -107,7 +109,7 @@ public class Topic_05_Web_Element_Method {
 
 	}
 
-	//@Test
+	// @Test
 	public void TC_03_Enabled_Function() {
 
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -131,7 +133,7 @@ public class Topic_05_Web_Element_Method {
 		sleepInSecond(2);
 		By passwordTextbox = By.id("new_password");
 		By signupButton = By.cssSelector("#create-account");
-		By newsletterCheckbox = By.xpath("//label[@for='marketing_newsletter']");
+		By newsletterCheckbox = By.xpath("//input[@id='marketing_newsletter']");
 		By upperCaseCompleted = By.cssSelector(".uppercase-char.completed");
 		By lowerCaseCompleted = By.cssSelector(".lowercase-char.completed");
 		By numberCompleted = By.cssSelector(".number-char.completed");
@@ -185,16 +187,18 @@ public class Topic_05_Web_Element_Method {
 		Assert.assertFalse(isElementDisplayed(numberCompleted));
 		Assert.assertFalse(isElementDisplayed(specialCaseCompleted));
 		Assert.assertFalse(isElementDisplayed(lengthCaseCompleted));
-		
+
 		sleepInSecond(2);
-		clickOnElement(newsletterCheckbox);
+
+		clickByJS(newsletterCheckbox);
+		//clickOnElement(newsletterCheckbox);
 		sleepInSecond(2);
 		Assert.assertTrue(isElementSelected(newsletterCheckbox));
 	}
 
 	@AfterClass
 	public void afterClass() {
-		// driver.quit();
+		driver.quit();
 	}
 
 	public boolean isElementDisplayed(By by) {
@@ -237,6 +241,10 @@ public class Topic_05_Web_Element_Method {
 			System.out.println(by + " is Disabled");
 			return false;
 		}
+	}
+
+	public void clickByJS(By by) {
+		jsExcutor.executeScript("arguments[0].click();", driver.findElement(by));
 	}
 
 	public void sleepInSecond(long timeoutInSecond) {
