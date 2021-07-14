@@ -8,6 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
-	<classpathentry kind="lib" path="libraries/selenium-server-standalone-3.141.59.jar"/>
+	<classpathentry kind="lib" path="libraries/selenium-server-standalone-3.141.59.jar" sourcepath="libraries/selenium-java-2.53.1-srcs.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

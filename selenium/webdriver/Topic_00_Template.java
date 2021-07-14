@@ -18,7 +18,8 @@ public class Topic_00_Template {
 		
 		System.setProperty("webdriver.chrome.driver", ".\\browserDrivers\\chromedriver.exe");
 		driver = new ChromeDriver();
-		sleepInSecond(5);
+
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.get("");
 	}
