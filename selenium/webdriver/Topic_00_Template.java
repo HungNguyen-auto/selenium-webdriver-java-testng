@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class Topic_00_Template {
 	WebDriver driver; // library , component cua selenium
-
+	String projectPath = System.getProperty("user.dir");
 	@BeforeClass
 	public void beforeClass() {
 		
